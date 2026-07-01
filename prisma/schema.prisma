@@ -1,4 +1,4 @@
-// Prisma schema — Engineering Operating Dashboard
+// Prisma schema — Roadmap Pulse
 // See docs/data-model.md for field definitions
 
 generator client {

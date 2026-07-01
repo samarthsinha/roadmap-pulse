@@ -27,12 +27,10 @@ export function Sidebar() {
   return (
     <aside className="flex w-60 shrink-0 flex-col border-r border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950">
       <div className="border-b border-zinc-200 px-5 py-5 dark:border-zinc-800">
-        <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
-          Engineering OS
-        </p>
         <h1 className="mt-1 text-lg font-bold text-zinc-900 dark:text-zinc-100">
-          EM Lead System
+          Roadmap Pulse
         </h1>
+        <p className="mt-0.5 text-xs text-zinc-500">Engineering operating rhythm</p>
       </div>
       <nav className="flex-1 space-y-1 p-3">
         {navItems.map(({ href, label, icon: Icon }) => {

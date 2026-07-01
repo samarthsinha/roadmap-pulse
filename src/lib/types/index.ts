@@ -1,4 +1,4 @@
-// ─── Core domain types for the Engineering Operating System ───
+// ─── Core domain types for Roadmap Pulse ───
 
 export type Role = "em" | "pm" | "lead" | "engineer";
 export type Confidence = "high" | "medium" | "low";

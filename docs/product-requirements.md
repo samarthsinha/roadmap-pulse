@@ -1,8 +1,8 @@
-# Product Requirements — Engineering Operating Dashboard
+# Product Requirements — Roadmap Pulse
 
 ## Overview
 
-A web-based **Engineering Operating Dashboard** for Senior Engineering Managers. It provides structured visibility across three levels: L0 (leadership), L1 (EM/PM/Lead weekly execution), and L2 (future tool integrations).
+**Roadmap Pulse** is a web-based engineering operating dashboard for Senior Engineering Managers. It provides structured visibility across three levels: L0 (leadership), L1 (EM/PM/Lead weekly execution), and L2 (future tool integrations).
 
 ## Users
 

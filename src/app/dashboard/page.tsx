@@ -30,8 +30,8 @@ export default async function DashboardHomePage() {
   return (
     <DashboardShell>
       <PageHeader
-        title="Engineering Operating Dashboard"
-        description="Plan → Execute → Report → Improve. Manual input first, integrations later."
+        title="Roadmap Pulse"
+        description="Plan → Execute → Report → Improve. Your engineering operating rhythm in one place."
         badge={`Week of ${week}`}
       />
 

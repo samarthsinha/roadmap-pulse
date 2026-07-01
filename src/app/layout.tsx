@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EM Lead Operating System",
+  title: "Roadmap Pulse",
   description:
-    "Engineering Operating System — plan tracks, execute weekly, report to leadership, monitor health.",
+    "Roadmap Pulse — plan tracks, execute weekly, report to leadership, monitor engineering health.",
 };
 
 export default function RootLayout({

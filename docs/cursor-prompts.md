@@ -1,4 +1,4 @@
-# Cursor Prompts — Engineering Operating Dashboard
+# Cursor Prompts — Roadmap Pulse
 
 Reusable prompts for Cursor Agent tasks. Follow the pattern: **plan → implement one feature → verify → review**.
 
@@ -7,7 +7,7 @@ Reusable prompts for Cursor Agent tasks. Follow the pattern: **plan → implemen
 ## Sprint 0 — Product definition
 
 ```text
-Create a product requirements document for an Engineering Operating Dashboard for Senior Engineering Managers. Include L0 leadership dashboard, L1 weekly tracker, track planning, skills matrix, risks, blockers, and weekly summary generation.
+Create a product requirements document for Roadmap Pulse, an engineering operating dashboard for Senior Engineering Managers. Include L0 leadership dashboard, L1 weekly tracker, track planning, skills matrix, risks, blockers, and weekly summary generation.
 ```
 
 ```text
