@@ -1,0 +1,161 @@
+// Prisma schema — Engineering Operating Dashboard
+// See docs/data-model.md for field definitions
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  GREEN
+  AMBER
+  RED
+  BLUE
+  GREY
+}
+
+enum Confidence {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum Severity {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+}
+
+model Initiative {
+  id                 String     @id @default(cuid())
+  name               String
+  businessGoal       String
+  owner              String
+  status             Status     @default(GREY)
+  progressPercentage Int        @default(0)
+  confidence         Confidence @default(MEDIUM)
+  targetDate         DateTime
+  leadershipAsk      String?
+  tracks             Track[]
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+}
+
+model Track {
+  id                   String                  @id @default(cuid())
+  initiativeId         String
+  initiative           Initiative              @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
+  name                 String
+  description          String?
+  ownerEm              String
+  ownerPm              String
+  techLead             String
+  status               Status                  @default(GREY)
+  progressPercentage   Int                     @default(0)
+  confidence           Confidence              @default(MEDIUM)
+  startDate            DateTime?
+  targetDate           DateTime
+  effortEstimateDays   Int
+  actualEffortDays     Int?
+  weeklyStatuses       WeeklyStatus[]
+  skillRequirements    TrackSkillRequirement[]
+  risks                Risk[]
+  blockers             Blocker[]
+  createdAt            DateTime                @default(now())
+  updatedAt            DateTime                @updatedAt
+}
+
+model WeeklyStatus {
+  id                String   @id @default(cuid())
+  trackId           String
+  track             Track    @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  weekStartDate     DateTime
+  status            Status
+  progressUpdate    String?
+  completedThisWeek String[]
+  plannedNextWeek   String[]
+  risks             String[]
+  blockers          String[]
+  decisionsNeeded   String[]
+  leadershipAsk     String?
+  updatedBy         String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([trackId, weekStartDate])
+}
+
+model Engineer {
+  id                     String          @id @default(cuid())
+  name                   String
+  role                   String
+  level                  String
+  manager                String?
+  availabilityPercentage Int             @default(100)
+  location               String?
+  skills                 EngineerSkill[]
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
+}
+
+model Skill {
+  id              String                  @id @default(cuid())
+  name            String                  @unique
+  category        String
+  engineers       EngineerSkill[]
+  trackRequirements TrackSkillRequirement[]
+  createdAt       DateTime                @default(now())
+}
+
+model EngineerSkill {
+  engineerId String
+  skillId    String
+  rating     Int
+  engineer   Engineer @relation(fields: [engineerId], references: [id], onDelete: Cascade)
+  skill      Skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([engineerId, skillId])
+}
+
+model TrackSkillRequirement {
+  trackId          String
+  skillId          String
+  requiredRating   Int
+  effortWeight     Float   @default(1.0)
+  track            Track   @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  skill            Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([trackId, skillId])
+}
+
+model Risk {
+  id         String    @id @default(cuid())
+  trackId    String
+  track      Track     @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  title      String
+  severity   Severity
+  owner      String
+  status     String    @default("open")
+  mitigation String?
+  dueDate    DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Blocker {
+  id                 String   @id @default(cuid())
+  trackId            String
+  track              Track    @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  title              String
+  owner              String
+  blockedSince       DateTime
+  status             String   @default("open")
+  escalationNeeded   Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}

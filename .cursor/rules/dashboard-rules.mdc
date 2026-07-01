@@ -1,0 +1,37 @@
+---
+description: Dashboard UI and data display rules
+globs: "**/dashboard/**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Dashboard Rules
+
+## L0 pages
+- Summary cards, progress charts, risk tables, leadership asks
+- No ticket-level or engineer-level detail
+
+## L1 pages
+- Detailed weekly track updates in tables
+- Group by initiative where possible
+
+## Status values
+`GREEN` | `AMBER` | `RED` | `BLUE` | `GREY`
+
+## Confidence values
+`HIGH` | `MEDIUM` | `LOW`
+
+## Progress
+Numeric 0–100 only
+
+## Leadership asks
+Must display owner and due date when available
+
+## Empty states
+Every list/table needs an empty state message
+
+## Colors
+- Green → on track
+- Amber → at risk
+- Red → blocked
+- Blue → complete
+- Grey → not started

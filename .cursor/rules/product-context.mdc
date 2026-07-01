@@ -1,0 +1,36 @@
+---
+description: Product context for the Engineering Operating Dashboard
+alwaysApply: true
+---
+
+# Engineering Operating Dashboard
+
+You are helping build an Engineering Operating Dashboard for Senior Engineering Managers.
+
+## Visibility levels
+
+**L0 — Leadership dashboard**
+- Initiative-level progress, confidence, status, risks, leadership asks
+- Simple, executive-friendly, decision-focused
+
+**L1 — EM / PM / Lead tracker**
+- Weekly track-level progress
+- Completed work, next steps, blockers, risks, owners, asks
+
+**L2 — Execution systems**
+- Jira, Linear, GitHub are future integrations
+- MVP uses manual entry and CSV import
+
+## Principles
+
+- Keep dashboards clean; no ticket-level detail on L0
+- Every Red/Amber status must have an owner and next action
+- Every leadership ask must be specific, actionable, with owner + due date
+- Start read-only, then add forms and automation
+- Business logic in `lib/`; UI in `components/`
+
+## Key docs
+
+- `docs/product-requirements.md`
+- `docs/data-model.md`
+- `docs/dashboard-spec.md`

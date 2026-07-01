@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Engineering Operating Dashboard
 
-## Getting Started
+Senior EM productivity system — track planning, weekly L1 tracker, L0 leadership dashboard, and automation.
 
-First, run the development server:
+Built following the phased implementation plan in `docs/`.
+
+## Quick start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000/dashboard](http://localhost:3000/dashboard).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Demo data works out of the box (in-memory fallback). For PostgreSQL:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example .env
+docker compose up -d
+npm run db:migrate
+npm run db:seed
+```
 
-## Learn More
+## Architecture
 
-To learn more about Next.js, take a look at the following resources:
+| Layer | Routes | Purpose |
+|-------|--------|---------|
+| L0 | `/dashboard/l0` | Leadership — progress, risks, confidence, asks |
+| L1 | `/dashboard/l1` | Weekly tracker for EM / PM / Lead |
+| Planning | `/dashboard/tracks`, `/skills`, `/capacity` | Skills, effort, ownership, fit scoring |
+| Ops | `/dashboard/risks` | Risk and blocker register with aging |
+| Automation | `/dashboard/summary` | L0 + L1 markdown generation |
+| Health | `/dashboard/summary` | L1 + L0 markdown summaries |
+| `/dashboard/alerts` | Automated operational alerts |
+| `/dashboard/data` | CSV import and export |
+| `/dashboard/health` | DORA + SPACE metrics |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Docs & Cursor rules
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Path | Contents |
+|------|----------|
+| `docs/product-requirements.md` | PRD, users, MVP scope |
+| `docs/data-model.md` | Entities, enums, skill-fit formula |
+| `docs/dashboard-spec.md` | Page specs for L0, L1, planner |
+| `docs/cursor-prompts.md` | Reusable Cursor Agent prompts |
+| `.cursor/rules/` | Product context, code style, dashboard rules |
 
-## Deploy on Vercel
+## Build order (from plan)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. ✅ Docs, data model, Cursor rules
+2. ✅ Prisma schema + seed (3 initiatives, 8 tracks, 10 engineers)
+3. ✅ App shell + read-only dashboards
+4. ✅ Create/edit forms (WeeklyStatus, Track) with Zod validation
+5. ✅ CSV import/export
+6. ✅ Operational alerts (stale updates, blocker aging, status)
+7. 🔲 Jira/GitHub integrations
+8. 🔲 Auth (Clerk/Auth.js)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Tech stack
+
+- Next.js 16 + TypeScript
+- Tailwind CSS
+- Prisma + PostgreSQL
+- Recharts (L0 charts)
+- Zod (validation — forms in Phase 2)
+
+## API
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /api/export?type=tracks` | Download CSV export |
+| `POST /api/import` | Upload CSV (multipart: type, file) |
+| `GET /api/summary` | L1 + L0 markdown summaries |
+| `GET /api/automation/summary` | JSON weekly summary (legacy) |
+| `GET /api/automation/alerts` | Alert generation |
+
+## Cursor workflow
+
+See `docs/cursor-prompts.md`. Pattern: plan → implement one feature → lint/typecheck → review.
+
+**Node requirement:** Next.js 16 and Prisma 5 work best with Node ≥ 20.9. Upgrade with `nvm install 20` if needed.

@@ -1,0 +1,18 @@
+---
+description: Testing and verification standards
+globs: "**/*.{test,spec}.{ts,tsx}"
+alwaysApply: false
+---
+
+# Testing Rules
+
+- Run `npx tsc --noEmit` and `npm run lint` before finishing
+- Unit test pure functions in `lib/metrics/` and `lib/status/`
+- Test skill-fit scoring with edge cases (no skills, over-qualified, zero availability)
+- Test summary generation with empty weekly statuses
+- Prefer testing business logic over snapshot-testing entire pages
+
+```bash
+npx tsc --noEmit
+npm run lint
+```

@@ -1,0 +1,24 @@
+---
+description: TypeScript and code style conventions
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Code Style
+
+- Use TypeScript strictly; no `any`
+- Prefer Server Components unless interactivity is needed
+- Use shadcn/ui for UI primitives
+- Use Prisma for database access via `lib/db/`
+- Use Zod for API/form validation
+- Keep files small; extract reusable components
+- Add clear types for all dashboard data
+- Business logic in `lib/metrics/`, `lib/status/`, `lib/ai-summary/`
+- UI rendering in `components/`
+
+```typescript
+// ✅ Query in server component
+const tracks = await getTracksWithInitiatives();
+
+// ❌ Don't put scoring logic in components
+```
